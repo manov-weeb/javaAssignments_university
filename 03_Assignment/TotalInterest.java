@@ -1,49 +1,53 @@
 import java.util.Scanner;
 
-class Interest{
-	double principal, interestRate, totalInterest, time;
+class SimpleInterest {
 
-	double rateInDecimal;
+    double principal, rate;
+    int months;
 
-	Interest(double principal, double interestRate, double time){
-		this.principal = principal;
-		this.interestRate = interestRate;
-		this.rateInDecimal = (this.interestRate)/(100.00);
-		this.time = time/(12.0);
-		
-	} 
+    // Constructor for SimpleInterest class
+    SimpleInterest(double principal, double rate, int months) {
+        this.principal = principal;
+        this.rate = rate;
+        this.months = months;
+    }
 
-	
+    // Method to calculate the total interest at the end of the time period
+    double calculateTotalInterest() {
+        double years = months / 12.0;  // Convert months to years
+        return principal * rate * years;  // Calculate the interest
+    }
 
-	double calculateTotalInterest(){
-		totalInterest = principal * rateInDecimal * time;
-		return totalInterest;
-	}
+    // Method to calculate the balance at the end of the time period
+    double calculateBalance() {
+        return principal + calculateTotalInterest();
+    }
 }
 
-public class TotalInterest{
-	public static void main(String args[]){
-		
-		Scanner scanner = new Scanner(System.in);
-		double p, rate, time;
+public class TotalInterest {
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        double principal, rate;
+        int timeInMonths;
 
-		System.out.print("Enter the principal amount: ");
-		p = scanner.nextDouble();
+        // Input for principal, interest rate, and time
+        System.out.print("Enter the principal amount: ");
+        principal = scanner.nextDouble();
 
-		System.out.println("Enter the interest rate(in %): ");
-		rate = scanner.nextDouble();
+        System.out.print("Enter the interest rate (in %): ");
+        rate = scanner.nextDouble() / 100;  // Convert percentage to decimal
 
-		System.out.println("Enter the time (in months): ");
-		time = scanner.nextDouble();
+        System.out.print("Enter the time (in months): ");
+        timeInMonths = scanner.nextInt();
 
-		Interest interestObj = new Interest(p, rate, time);
-		System.out.println("The total interest calculated" + interestObj.calculateTotalInterest() + " for, \n Principal: " + interestObj.principal);
-		System.out.println("Rate of Interest: " + interestObj.interestRate);
-		System.out.println("for " + time);
+        // Create SimpleInterest object
+        SimpleInterest interestObj = new SimpleInterest(principal, rate, timeInMonths);
 
-		
-		
-
-		
-	}
+        // Display the total interest and the final balance
+        System.out.println("Total interest calculated: " + interestObj.calculateTotalInterest());
+        System.out.println("Final balance after " + timeInMonths + " months: " + interestObj.calculateBalance());
+        
+        scanner.close();
+    }
 }
